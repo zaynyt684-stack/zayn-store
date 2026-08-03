@@ -3,10 +3,9 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zayn Store Login</title>
 
-<title>Zayn Store - Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
 
@@ -22,65 +21,25 @@
 Zayn Store
 </div>
 
-
-<nav>
-
-<a href="index.html">Home</a>
-<a href="courses.html">Courses</a>
-<a href="products.html">Products</a>
-
-</nav>
-
 </header>
-
-
-
-
-<section class="hero">
-
-<h1>
-Welcome Back
-</h1>
-
-<p>
-Login to access your Zayn Store account.
-</p>
-
-</section>
-
-
 
 
 
 <section class="features">
 
-
-<div class="card login-card">
+<div class="card">
 
 
 <h2>
-Login / Create Account
+Login / Signup
 </h2>
 
 
 
-<input 
-id="email"
-type="email"
-placeholder="Email Address">
+<input id="email" placeholder="Email">
 
 
-
-<input 
-id="password"
-type="password"
-placeholder="Password">
-
-
-
-<button onclick="loginUser()">
-Login
-</button>
+<input id="password" type="password" placeholder="Password">
 
 
 
@@ -89,27 +48,20 @@ Create Account
 </button>
 
 
+<button onclick="loginUser()">
+Login
+</button>
+
 
 <button onclick="googleLogin()">
-Continue With Google
+Google Login
 </button>
 
 
 
 </div>
 
-
 </section>
-
-
-
-
-<footer>
-
-© 2026 Zayn Store
-
-</footer>
-
 
 
 
@@ -121,7 +73,8 @@ import {
 
 auth,
 googleProvider,
-signInWithPopup
+signInWithPopup,
+db
 
 } from "./firebase.js";
 
@@ -137,20 +90,26 @@ signInWithEmailAndPassword
 
 
 
+import {
+
+doc,
+setDoc
+
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
-// Signup
 
 
 async function signupUser(){
 
 
-const email =
+let email =
 document.getElementById("email").value;
 
 
-const password =
+let password =
 document.getElementById("password").value;
 
 
@@ -158,49 +117,72 @@ document.getElementById("password").value;
 try{
 
 
+let result =
 await createUserWithEmailAndPassword(
-
 auth,
 email,
 password
+);
+
+
+
+let user=result.user;
+
+
+
+await setDoc(
+
+doc(db,"users",user.uid),
+
+{
+
+name:email.split("@")[0],
+
+email:user.email,
+
+uid:user.uid,
+
+createdAt:new Date()
+
+}
 
 );
 
 
 
-alert("Account Created Successfully");
+alert("Account Created");
 
 
-window.location.href="profile.html";
-
-
-}
-
-catch(error){
-
-alert(error.message);
-
-}
+location.href="profile.html";
 
 
 }
 
 
+catch(e){
+
+alert(e.message);
+
+}
+
+
+}
 
 
 
 
-// Login
+
+
 
 
 async function loginUser(){
 
 
-const email =
+let email =
 document.getElementById("email").value;
 
 
-const password =
+let password =
 document.getElementById("password").value;
 
 
@@ -218,31 +200,26 @@ password
 
 
 
-alert("Login Successful");
-
-
-window.location.href="profile.html";
+location.href="profile.html";
 
 
 }
 
 
-catch(error){
+catch(e){
 
-alert(error.message);
-
-}
-
+alert(e.message);
 
 }
 
 
+}
 
 
 
 
 
-// Google Login
+
 
 
 async function googleLogin(){
@@ -251,7 +228,8 @@ async function googleLogin(){
 try{
 
 
-const result = await signInWithPopup(
+let result =
+await signInWithPopup(
 
 auth,
 googleProvider
@@ -260,44 +238,59 @@ googleProvider
 
 
 
-alert(
-"Welcome " + result.user.displayName
+let user=result.user;
+
+
+
+await setDoc(
+
+doc(db,"users",user.uid),
+
+{
+
+name:user.displayName,
+
+email:user.email,
+
+photo:user.photoURL,
+
+uid:user.uid,
+
+createdAt:new Date()
+
+}
+
 );
 
 
 
-window.location.href="profile.html";
+location.href="profile.html";
+
+
+}
+
+catch(e){
+
+alert(e.message);
+
+}
 
 
 }
 
 
-catch(error){
-
-
-alert(error.message);
-
-
-}
-
-
-}
 
 
 
+window.signupUser=signupUser;
 
+window.loginUser=loginUser;
 
-
-window.signupUser = signupUser;
-
-window.loginUser = loginUser;
-
-window.googleLogin = googleLogin;
+window.googleLogin=googleLogin;
 
 
 
 </script>
-
 
 
 </body>
