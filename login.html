@@ -22,71 +22,131 @@
 Zayn Store
 </div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="courses.html">Courses</a>
-<a href="prompts.html">Prompts</a>
-<a href="products.html">Products</a>
-</nav>
-
 </header>
-
-
-
-<section class="hero">
-
-<h1>
-Welcome Back
-</h1>
-
-<p>
-Login to access your Zayn Store account.
-</p>
-
-</section>
 
 
 
 <section class="features">
 
-
 <div class="card login-card">
 
 <h2>
-Login
+Login / Signup
 </h2>
 
 
-<input type="email" placeholder="Email">
+<input id="email" type="email" placeholder="Email">
 
 
-<input type="password" placeholder="Password">
+<input id="password" type="password" placeholder="Password">
 
 
-<button>
+<button onclick="loginUser()">
 Login
 </button>
 
 
-<p>
-Don't have an account?
-<br>
-Create one
-</p>
+<button onclick="signupUser()">
+Create Account
+</button>
 
 
 </div>
-
 
 </section>
 
 
 
-<footer>
+<script type="module">
 
-© 2026 Zayn Store
+import { 
+    auth,
+    db
+} from "./firebase.js";
 
-</footer>
+
+import {
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+} 
+from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+async function signupUser(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+
+try{
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+
+alert("Account Created");
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+
+
+async function loginUser(){
+
+const email =
+document.getElementById("email").value;
+
+
+const password =
+document.getElementById("password").value;
+
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+
+alert("Login Successful");
+
+window.location.href="profile.html";
+
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+window.signupUser=signupUser;
+window.loginUser=loginUser;
+
+
+</script>
 
 
 </body>
