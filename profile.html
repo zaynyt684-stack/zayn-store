@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zayn Store - Profile</title>
+<title>Zayn Store Profile</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -44,7 +44,7 @@ My Profile
 </h1>
 
 <p>
-Your Zayn Store account details
+Your account information
 </p>
 
 </section>
@@ -59,24 +59,28 @@ Your Zayn Store account details
 <div class="card">
 
 
-<img id="userPhoto"
-src=""
+<img id="photo"
+src="https://via.placeholder.com/100"
 style="width:100px;height:100px;border-radius:50%;margin-bottom:20px;">
 
 
 
-<h2 id="userName">
+<h2 id="name">
 Loading...
 </h2>
 
 
-<p id="userEmail">
-Please wait...
+<p id="email">
+Loading...
+</p>
+
+
+<p id="uid">
 </p>
 
 
 
-<button onclick="logoutUser()">
+<button onclick="logout()">
 Logout
 </button>
 
@@ -85,9 +89,7 @@ Logout
 </div>
 
 
-
 </section>
-
 
 
 
@@ -103,14 +105,13 @@ Logout
 
 
 
-
-
 <script type="module">
 
 
 import {
 
-auth
+auth,
+db
 
 } from "./firebase.js";
 
@@ -126,27 +127,68 @@ signOut
 
 
 
+import {
+
+doc,
+getDoc
+
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-onAuthStateChanged(auth,(user)=>{
+
+
+
+
+
+onAuthStateChanged(auth, async(user)=>{
 
 
 if(user){
 
 
-document.getElementById("userName").innerHTML =
-user.displayName || "Zayn User";
+
+const ref =
+doc(db,"users",user.uid);
 
 
 
-document.getElementById("userEmail").innerHTML =
-user.email;
+const snap =
+await getDoc(ref);
 
 
 
-document.getElementById("userPhoto").src =
-user.photoURL || 
-"https://via.placeholder.com/100";
+if(snap.exists()){
+
+
+let data=snap.data();
+
+
+
+document.getElementById("name").innerHTML =
+data.name || "Zayn User";
+
+
+
+document.getElementById("email").innerHTML =
+data.email;
+
+
+
+document.getElementById("uid").innerHTML =
+"User ID: "+data.uid;
+
+
+
+if(data.photo){
+
+document.getElementById("photo").src=data.photo;
+
+}
+
+
+
+}
 
 
 
@@ -155,10 +197,11 @@ user.photoURL ||
 else{
 
 
-window.location.href="login.html";
+location.href="login.html";
 
 
 }
+
 
 
 });
@@ -168,7 +211,10 @@ window.location.href="login.html";
 
 
 
-async function logoutUser(){
+
+
+
+async function logout(){
 
 
 await signOut(auth);
@@ -177,19 +223,18 @@ await signOut(auth);
 alert("Logged Out");
 
 
-window.location.href="login.html";
+location.href="login.html";
 
 
 }
 
 
 
-window.logoutUser = logoutUser;
+window.logout=logout;
 
 
 
 </script>
-
 
 
 
