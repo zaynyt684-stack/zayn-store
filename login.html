@@ -22,23 +22,60 @@
 Zayn Store
 </div>
 
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="courses.html">Courses</a>
+<a href="products.html">Products</a>
+
+</nav>
+
 </header>
+
+
+
+
+<section class="hero">
+
+<h1>
+Welcome Back
+</h1>
+
+<p>
+Login to access your Zayn Store account.
+</p>
+
+</section>
+
+
 
 
 
 <section class="features">
 
+
 <div class="card login-card">
 
+
 <h2>
-Login / Signup
+Login / Create Account
 </h2>
 
 
-<input id="email" type="email" placeholder="Email">
+
+<input 
+id="email"
+type="email"
+placeholder="Email Address">
 
 
-<input id="password" type="password" placeholder="Password">
+
+<input 
+id="password"
+type="password"
+placeholder="Password">
+
 
 
 <button onclick="loginUser()">
@@ -46,87 +83,93 @@ Login
 </button>
 
 
+
 <button onclick="signupUser()">
 Create Account
 </button>
 
 
+
+<button onclick="googleLogin()">
+Continue With Google
+</button>
+
+
+
 </div>
+
 
 </section>
 
 
 
-<script type="module">
 
-import { 
-    auth,
-    db
-} from "./firebase.js";
+<footer>
+
+© 2026 Zayn Store
+
+</footer>
+
+
+
+
+
+<script type="module">
 
 
 import {
+
+auth,
+googleProvider,
+signInWithPopup
+
+} from "./firebase.js";
+
+
+
+import {
+
 createUserWithEmailAndPassword,
 signInWithEmailAndPassword
-} 
-from 
+
+} from 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
+
+
+
+// Signup
+
+
 async function signupUser(){
 
+
 const email =
 document.getElementById("email").value;
+
 
 const password =
 document.getElementById("password").value;
 
 
+
 try{
+
 
 await createUserWithEmailAndPassword(
+
 auth,
 email,
 password
+
 );
 
 
-alert("Account Created");
 
-}
+alert("Account Created Successfully");
 
-catch(error){
-
-alert(error.message);
-
-}
-
-}
-
-
-
-
-async function loginUser(){
-
-const email =
-document.getElementById("email").value;
-
-
-const password =
-document.getElementById("password").value;
-
-
-try{
-
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-
-alert("Login Successful");
 
 window.location.href="profile.html";
 
@@ -139,14 +182,122 @@ alert(error.message);
 
 }
 
+
 }
 
 
-window.signupUser=signupUser;
-window.loginUser=loginUser;
+
+
+
+
+// Login
+
+
+async function loginUser(){
+
+
+const email =
+document.getElementById("email").value;
+
+
+const password =
+document.getElementById("password").value;
+
+
+
+try{
+
+
+await signInWithEmailAndPassword(
+
+auth,
+email,
+password
+
+);
+
+
+
+alert("Login Successful");
+
+
+window.location.href="profile.html";
+
+
+}
+
+
+catch(error){
+
+alert(error.message);
+
+}
+
+
+}
+
+
+
+
+
+
+
+// Google Login
+
+
+async function googleLogin(){
+
+
+try{
+
+
+const result = await signInWithPopup(
+
+auth,
+googleProvider
+
+);
+
+
+
+alert(
+"Welcome " + result.user.displayName
+);
+
+
+
+window.location.href="profile.html";
+
+
+}
+
+
+catch(error){
+
+
+alert(error.message);
+
+
+}
+
+
+}
+
+
+
+
+
+
+window.signupUser = signupUser;
+
+window.loginUser = loginUser;
+
+window.googleLogin = googleLogin;
+
 
 
 </script>
+
 
 
 </body>
