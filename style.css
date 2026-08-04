@@ -4169,3 +4169,54 @@ font-size:30px;
 
 
    }
+
+/* ==========================================
+   Signup Page Extra
+========================================== */
+
+
+.signup-card{
+
+max-width:480px;
+
+}
+
+
+
+.terms{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+font-size:14px;
+
+color:#CFCFCF;
+
+margin:20px 0 25px;
+
+cursor:pointer;
+
+}
+
+
+
+.terms input{
+
+width:16px;
+
+height:16px;
+
+accent-color:#6D5CFF;
+
+}
+
+
+
+.signup-card .input-box{
+
+margin-bottom:16px;
+
+}
