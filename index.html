@@ -1132,6 +1132,24 @@
 
 </button>
 
+<!-- Mobile Menu Fix -->
+<script>
+const menuBtn=document.querySelector(".menu-btn");
+const navLinks=document.querySelector(".nav-links");
+
+if(menuBtn && navLinks){
+menuBtn.addEventListener("click",()=>{
+navLinks.classList.toggle("show-menu");
+});
+
+document.querySelectorAll(".nav-links a").forEach(link=>{
+link.addEventListener("click",()=>{
+navLinks.classList.remove("show-menu");
+});
+});
+}
+</script>
+
 <!-- ===========================
      JavaScript
 =========================== -->
