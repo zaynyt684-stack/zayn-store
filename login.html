@@ -3,11 +3,18 @@
 
 <head>
 
-<title>Zayn Store Login</title>
-
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Zayn Store | Login</title>
+
 <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 </head>
 
@@ -15,282 +22,166 @@
 <body>
 
 
-<header class="navbar">
+<div class="bg-blur blur-1"></div>
+<div class="bg-blur blur-2"></div>
 
-<div class="logo">
-Zayn Store
+
+
+<!-- Login Section -->
+
+
+<section class="login-section">
+
+
+<div class="login-card">
+
+
+
+<div class="login-logo">
+
+
+<img src="assets/file_000000000670823095edc6b750b38c45.png"
+alt="Zayn Store Logo">
+
+
 </div>
 
-</header>
 
 
 
-<section class="features">
+<h1>
 
-<div class="card">
+Welcome Back
 
-
-<h2>
-Login / Signup
-</h2>
+</h1>
 
 
+<p>
 
-<input id="email" placeholder="Email">
+Login to access your Zayn Store account
 
-
-<input id="password" type="password" placeholder="Password">
+</p>
 
 
 
-<button onclick="signupUser()">
-Create Account
-</button>
+
+<form>
 
 
-<button onclick="loginUser()">
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input 
+type="email"
+placeholder="Email Address"
+required>
+
+</div>
+
+
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input 
+type="password"
+placeholder="Password"
+required>
+
+</div>
+
+
+
+
+<div class="login-options">
+
+
+<label>
+
+<input type="checkbox">
+
+Remember me
+
+</label>
+
+
+<a href="#">
+Forgot Password?
+</a>
+
+
+</div>
+
+
+
+
+<button class="login-submit">
+
 Login
+
+<i class="fa-solid fa-arrow-right"></i>
+
 </button>
 
 
-<button onclick="googleLogin()">
-Google Login
+
+</form>
+
+
+
+
+
+<div class="divider">
+
+<span>
+OR
+</span>
+
+</div>
+
+
+
+
+
+<button class="google-login">
+
+<i class="fa-brands fa-google"></i>
+
+Continue with Google
+
 </button>
+
+
+
+
+
+<p class="signup-text">
+
+Don't have an account?
+
+<a href="signup.html">
+Create Account
+</a>
+
+
+</p>
 
 
 
 </div>
+
 
 </section>
 
 
 
 
-<script type="module">
 
-
-import {
-
-auth,
-googleProvider,
-signInWithPopup,
-db
-
-} from "./firebase.js";
-
-
-
-import {
-
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword
-
-} from 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
-import {
-
-doc,
-setDoc
-
-} from 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-async function signupUser(){
-
-
-let email =
-document.getElementById("email").value;
-
-
-let password =
-document.getElementById("password").value;
-
-
-
-try{
-
-
-let result =
-await createUserWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-
-
-let user=result.user;
-
-
-
-await setDoc(
-
-doc(db,"users",user.uid),
-
-{
-
-name:email.split("@")[0],
-
-email:user.email,
-
-uid:user.uid,
-
-createdAt:new Date()
-
-}
-
-);
-
-
-
-alert("Account Created");
-
-
-location.href="profile.html";
-
-
-}
-
-
-catch(e){
-
-alert(e.message);
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-async function loginUser(){
-
-
-let email =
-document.getElementById("email").value;
-
-
-let password =
-document.getElementById("password").value;
-
-
-
-try{
-
-
-await signInWithEmailAndPassword(
-
-auth,
-email,
-password
-
-);
-
-
-
-location.href="profile.html";
-
-
-}
-
-
-catch(e){
-
-alert(e.message);
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-async function googleLogin(){
-
-
-try{
-
-
-let result =
-await signInWithPopup(
-
-auth,
-googleProvider
-
-);
-
-
-
-let user=result.user;
-
-
-
-await setDoc(
-
-doc(db,"users",user.uid),
-
-{
-
-name:user.displayName,
-
-email:user.email,
-
-photo:user.photoURL,
-
-uid:user.uid,
-
-createdAt:new Date()
-
-}
-
-);
-
-
-
-location.href="profile.html";
-
-
-}
-
-catch(e){
-
-alert(e.message);
-
-}
-
-
-}
-
-
-
-
-
-window.signupUser=signupUser;
-
-window.loginUser=loginUser;
-
-window.googleLogin=googleLogin;
-
-
-
-</script>
+<script src="script.js"></script>
 
 
 </body>
