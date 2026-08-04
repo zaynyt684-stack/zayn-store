@@ -2489,3 +2489,401 @@ scale(1);
 }
 
 }
+
+
+/* ==========================================
+   ZAYN STORE FINAL 3D UI PATCH
+   Paste at END of style.css
+========================================== */
+
+
+/* ==========================
+   3D Logo
+========================== */
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+
+
+.logo img{
+
+width:55px;
+
+height:55px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+background:#111;
+
+border:2px solid rgba(255,255,255,.15);
+
+box-shadow:
+0 0 25px rgba(109,92,255,.45);
+
+transform-style:preserve-3d;
+
+transition:.5s;
+
+animation:logoFloat 4s ease-in-out infinite;
+
+}
+
+
+
+.logo img:hover{
+
+transform:
+
+rotateY(25deg)
+
+rotateX(15deg)
+
+scale(1.08);
+
+box-shadow:
+
+0 0 45px rgba(0,212,255,.65);
+
+}
+
+
+
+@keyframes logoFloat{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-8px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+
+/* ==========================
+   Hero Floating Cards
+========================== */
+
+
+.floating-card{
+
+
+padding:30px;
+
+border-radius:30px;
+
+background:
+
+rgba(255,255,255,.06);
+
+border:
+
+1px solid rgba(255,255,255,.12);
+
+backdrop-filter:blur(20px);
+
+position:relative;
+
+overflow:hidden;
+
+transition:.5s;
+
+transform-style:preserve-3d;
+
+animation:
+
+float3d 5s ease-in-out infinite;
+
+
+}
+
+
+
+.floating-card i{
+
+
+font-size:40px;
+
+margin-bottom:20px;
+
+background:
+
+linear-gradient(135deg,#6D5CFF,#00D4FF);
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+
+}
+
+
+
+.floating-card:hover{
+
+
+transform:
+
+translateY(-15px)
+
+rotateX(8deg)
+
+rotateY(-8deg);
+
+
+
+box-shadow:
+
+0 30px 70px rgba(109,92,255,.35);
+
+
+}
+
+
+
+@keyframes float3d{
+
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+
+50%{
+
+transform:translateY(-15px);
+
+}
+
+
+}
+
+
+
+
+/* ==========================
+   Cards Reveal
+========================== */
+
+
+.feature-card,
+.category-card,
+.product-card,
+.stat-card,
+.testimonial-card,
+.cta-box{
+
+
+opacity:0;
+
+transform:
+
+translateY(50px);
+
+
+transition:
+
+.8s ease;
+
+
+}
+
+
+
+.show{
+
+
+opacity:1;
+
+transform:
+
+translateY(0);
+
+
+}
+
+
+
+
+
+
+/* ==========================
+   Glow Border
+========================== */
+
+
+.feature-card:hover,
+.testimonial-card:hover,
+.stat-card:hover{
+
+
+border-color:#6D5CFF;
+
+
+box-shadow:
+
+0 20px 50px rgba(109,92,255,.25);
+
+
+}
+
+
+
+
+
+
+/* ==========================
+   Product Image 3D
+========================== */
+
+
+.product-image{
+
+
+width:90px;
+
+height:90px;
+
+border-radius:28px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:38px;
+
+background:
+
+linear-gradient(135deg,#6D5CFF,#00D4FF);
+
+margin-bottom:25px;
+
+transition:.5s;
+
+
+}
+
+
+
+.product-card:hover .product-image{
+
+
+transform:
+
+rotateY(20deg)
+
+scale(1.1);
+
+
+
+}
+
+
+
+
+
+
+/* ==========================
+   CTA Glow
+========================== */
+
+
+.cta-box{
+
+
+position:relative;
+
+overflow:hidden;
+
+
+}
+
+
+.cta-box::before{
+
+
+content:"";
+
+position:absolute;
+
+width:250px;
+
+height:250px;
+
+background:
+
+rgba(255,255,255,.15);
+
+
+border-radius:50%;
+
+
+top:-100px;
+
+right:-100px;
+
+
+filter:blur(40px);
+
+
+}
+
+
+
+
+
+
+
+/* ==========================
+   Mobile Logo Fix
+========================== */
+
+
+@media(max-width:768px){
+
+
+.logo img{
+
+width:45px;
+
+height:45px;
+
+}
+
+
+.floating-card{
+
+
+padding:25px;
+
+
+}
+
+
+}
