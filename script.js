@@ -1,433 +1,626 @@
 /* ==========================================
    ZAYN STORE
-   script.js - Part 1
+   Premium Script.js
 ========================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+
+document.addEventListener("DOMContentLoaded",()=>{
+
 
     initLoader();
+
     initNavbar();
+
     initMobileMenu();
+
     initSmoothScroll();
-    initRevealAnimation();
+
+    initReveal();
+
+    initCounter();
+
+    initRipple();
+
     initScrollTop();
 
+    initSearch();
+
+    initLogoAnimation();
+
+
 });
+
+
 
 /* ==========================================
    Loader
 ========================================== */
 
-function initLoader() {
+function initLoader(){
 
-    const loader = document.getElementById("loader");
+const loader=document.getElementById("loader");
 
-    if (!loader) return;
+if(!loader) return;
 
-    setTimeout(() => {
 
-        loader.style.opacity = "0";
-        loader.style.visibility = "hidden";
+setTimeout(()=>{
 
-        setTimeout(() => {
+loader.style.opacity="0";
 
-            loader.remove();
+loader.style.visibility="hidden";
 
-        }, 500);
 
-    }, 1200);
+setTimeout(()=>{
 
-}
+loader.remove();
 
-/* ==========================================
-   Navbar Scroll Effect
-========================================== */
+},500);
 
-function initNavbar() {
 
-    const navbar = document.querySelector(".navbar");
+},1200);
 
-    if (!navbar) return;
-
-    window.addEventListener("scroll", () => {
-
-        if (window.scrollY > 20) {
-
-            navbar.classList.add("navbar-scrolled");
-
-        } else {
-
-            navbar.classList.remove("navbar-scrolled");
-
-        }
-
-    });
 
 }
 
+
+
+
 /* ==========================================
-   Mobile Menu
+ Navbar Scroll
 ========================================== */
 
-function initMobileMenu() {
 
-    const menuBtn = document.querySelector(".menu-btn");
-    const navLinks = document.querySelector(".nav-links");
+function initNavbar(){
 
-    if (!menuBtn || !navLinks) return;
+const navbar=document.querySelector(".navbar");
 
-    menuBtn.addEventListener("click", () => {
+if(!navbar)return;
 
-        navLinks.classList.toggle("show-menu");
 
-    });
+window.addEventListener("scroll",()=>{
+
+
+if(window.scrollY>30){
+
+navbar.classList.add("navbar-scrolled");
 
 }
 
-/* ==========================================
-   Active Navigation
-========================================== */
+else{
 
-const currentPage = window.location.pathname.split("/").pop();
+navbar.classList.remove("navbar-scrolled");
 
-document.querySelectorAll(".nav-links a").forEach(link => {
+}
 
-    const href = link.getAttribute("href");
-
-    if (href === currentPage || (currentPage === "" && href === "index.html")) {
-
-        link.classList.add("active");
-
-    }
 
 });
 
-/* ==========================================
-   Smooth Scroll
-========================================== */
-
-function initSmoothScroll() {
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-
-        anchor.addEventListener("click", function (e) {
-
-            const target = document.querySelector(this.getAttribute("href"));
-
-            if (!target) return;
-
-            e.preventDefault();
-
-            target.scrollIntoView({
-
-                behavior: "smooth"
-
-            });
-
-        });
-
-    });
 
 }
 
-/* ==========================================
-   Reveal Animation
-========================================== */
 
-function initRevealAnimation() {
 
-    const elements = document.querySelectorAll(
 
-        ".card,.category-card,.product-card,.glass-card,.stat-box,.offer-content"
-
-    );
-
-    if (!elements.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-
-        entries.forEach(entry => {
-
-            if (entry.isIntersecting) {
-
-                entry.target.classList.add("show");
-
-            }
-
-        });
-
-    }, {
-
-        threshold: 0.15
-
-    });
-
-    elements.forEach(item => observer.observe(item));
-
-}
 
 /* ==========================================
-   Scroll To Top
+ Mobile Menu
 ========================================== */
 
-function initScrollTop() {
 
-    const button = document.getElementById("scrollTop");
+function initMobileMenu(){
 
-    if (!button) return;
+const btn=document.querySelector(".menu-btn");
 
-    window.addEventListener("scroll", () => {
+const menu=document.querySelector(".nav-links");
 
-        if (window.scrollY > 500) {
 
-            button.classList.add("show");
+if(!btn || !menu)return;
 
-        } else {
 
-            button.classList.remove("show");
 
-        }
+btn.addEventListener("click",()=>{
 
-    });
 
-    button.addEventListener("click", () => {
+menu.classList.toggle("show-menu");
 
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    });
-
-}
-
-/* ==========================================
-   Mouse Glow Effect
-========================================== */
-
-document.addEventListener("mousemove", (e) => {
-
-    document.querySelectorAll(".card,.category-card,.product-card").forEach(card => {
-
-        const rect = card.getBoundingClientRect();
-
-        card.style.setProperty("--x", `${e.clientX - rect.left}px`);
-
-        card.style.setProperty("--y", `${e.clientY - rect.top}px`);
-
-    });
 
 });
 
-console.lo
-g("✅ Zayn Store Script Part 1 Loaded");
-
-/* ==========================================
-   ZAYN STORE
-   script.js - Part 2
-========================================== */
-
-/* ==========================================
-   Counter Animation
-========================================== */
-
-function initCounter() {
-
-    const counters = document.querySelectorAll(".stat-box h2");
-
-    if (!counters.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-
-        entries.forEach(entry => {
-
-            if (entry.isIntersecting) {
-
-                animateCounter(entry.target);
-
-                observer.unobserve(entry.target);
-
-            }
-
-        });
-
-    }, {
-
-        threshold: 0.4
-
-    });
-
-    counters.forEach(counter => observer.observe(counter));
 
 }
 
-function animateCounter(element) {
 
-    const text = element.innerText;
 
-    const number = parseInt(text.replace(/\D/g, ""));
 
-    const suffix = text.replace(/[0-9]/g, "");
 
-    let current = 0;
 
-    const step = Math.max(1, Math.ceil(number / 80));
-
-    const timer = setInterval(() => {
-
-        current += step;
-
-        if (current >= number) {
-
-            current = number;
-
-            clearInterval(timer);
-
-        }
-
-        element.innerText = current + suffix;
-
-    }, 20);
-
-}
 
 /* ==========================================
-   Ripple Button Effect
+ Active Navigation
 ========================================== */
 
-function initRippleEffect() {
 
-    document.querySelectorAll(".primary-btn,.secondary-btn,.buy-btn,.login-btn").forEach(button => {
+const page=location.pathname.split("/").pop();
 
-        button.addEventListener("click", function (e) {
 
-            const ripple = document.createElement("span");
+document.querySelectorAll(".nav-links a")
+.forEach(link=>{
 
-            ripple.className = "ripple";
 
-            const size = Math.max(this.clientWidth, this.clientHeight);
+let href=link.getAttribute("href");
 
-            ripple.style.width = ripple.style.height = size + "px";
 
-            const rect = this.getBoundingClientRect();
+if(href===page || (page==="" && href==="index.html")){
 
-            ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
 
-            ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+link.classList.add("active");
 
-            this.appendChild(ripple);
-
-            setTimeout(() => ripple.remove(), 700);
-
-        });
-
-    });
 
 }
 
-/* ==========================================
-   Toast Notification
-========================================== */
-
-function showToast(message) {
-
-    const toast = document.createElement("div");
-
-    toast.className = "toast";
-
-    toast.textContent = message;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => toast.classList.add("show"), 100);
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-        setTimeout(() => toast.remove(), 400);
-
-    }, 3000);
-
-}
-
-/* ==========================================
-   Theme Toggle
-========================================== */
-
-function initTheme() {
-
-    const button = document.querySelector(".theme-btn");
-
-    if (!button) return;
-
-    button.addEventListener("click", () => {
-
-        showToast("Premium Dark Theme Active");
-
-    });
-
-}
-
-/* ==========================================
-   Search
-========================================== */
-
-function initSearch() {
-
-    const input = document.querySelector(".search-box input");
-
-    if (!input) return;
-
-    input.addEventListener("keyup", () => {
-
-        const value = input.value.toLowerCase();
-
-        document.querySelectorAll(".product-card,.category-card").forEach(card => {
-
-            const text = card.innerText.toLowerCase();
-
-            card.style.display = text.includes(value) ? "" : "none";
-
-        });
-
-    });
-
-}
-
-/* ==========================================
-   Utilities
-========================================== */
-
-function $(selector) {
-
-    return document.querySelector(selector);
-
-}
-
-function $$(selector) {
-
-    return document.querySelectorAll(selector);
-
-}
-
-/* ==========================================
-   Final Init
-========================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    initCounter();
-
-    initRippleEffect();
-
-    initTheme();
-
-    initSearch();
 
 });
 
-console.log("✅ Zayn Store Loaded Successfully");
+
+
+
+
+
+
+/* ==========================================
+ Smooth Scroll
+========================================== */
+
+
+function initSmoothScroll(){
+
+
+document.querySelectorAll('a[href^="#"]')
+.forEach(anchor=>{
+
+
+anchor.addEventListener("click",e=>{
+
+
+let target=document.querySelector(
+anchor.getAttribute("href")
+);
+
+
+if(!target)return;
+
+
+e.preventDefault();
+
+
+target.scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+ Reveal Animation
+========================================== */
+
+
+function initReveal(){
+
+
+const elements=document.querySelectorAll(
+
+".feature-card,.category-card,.product-card,.stat-card,.testimonial-card,.floating-card,.cta-box"
+
+);
+
+
+
+if(!elements.length)return;
+
+
+
+const observer=new IntersectionObserver(entries=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add("show");
+
+
+}
+
+
+});
+
+
+},{
+
+
+threshold:.15
+
+
+});
+
+
+
+elements.forEach(el=>observer.observe(el));
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+ Counter Animation
+========================================== */
+
+
+function initCounter(){
+
+
+const counters=document.querySelectorAll(".stat-card h2");
+
+
+
+counters.forEach(counter=>{
+
+
+let value=counter.innerText;
+
+
+let number=parseInt(value);
+
+
+let suffix=value.replace(/[0-9]/g,"");
+
+
+let current=0;
+
+
+
+let interval=setInterval(()=>{
+
+
+current+=Math.ceil(number/60);
+
+
+
+if(current>=number){
+
+
+current=number;
+
+clearInterval(interval);
+
+
+}
+
+
+
+counter.innerText=current+suffix;
+
+
+
+},30);
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+ Button Ripple
+========================================== */
+
+
+function initRipple(){
+
+
+document.querySelectorAll(
+
+".primary-btn,.secondary-btn,.buy-btn,.login-btn"
+
+)
+.forEach(btn=>{
+
+
+btn.addEventListener("click",function(e){
+
+
+
+let circle=document.createElement("span");
+
+
+circle.className="ripple";
+
+
+let size=Math.max(
+this.offsetWidth,
+this.offsetHeight
+);
+
+
+circle.style.width=size+"px";
+
+circle.style.height=size+"px";
+
+
+
+let rect=this.getBoundingClientRect();
+
+
+
+circle.style.left=
+e.clientX-rect.left-size/2+"px";
+
+
+circle.style.top=
+e.clientY-rect.top-size/2+"px";
+
+
+
+this.appendChild(circle);
+
+
+
+setTimeout(()=>{
+
+circle.remove();
+
+},700);
+
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+ Scroll Top
+========================================== */
+
+
+function initScrollTop(){
+
+
+const btn=document.getElementById("scrollTop");
+
+
+if(!btn)return;
+
+
+
+window.addEventListener("scroll",()=>{
+
+
+if(window.scrollY>500){
+
+btn.classList.add("show");
+
+}
+
+else{
+
+btn.classList.remove("show");
+
+}
+
+
+});
+
+
+
+btn.onclick=()=>{
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+ Mouse Glow Effect
+========================================== */
+
+
+document.addEventListener("mousemove",e=>{
+
+
+document.querySelectorAll(
+
+".feature-card,.category-card,.product-card"
+
+)
+.forEach(card=>{
+
+
+let rect=card.getBoundingClientRect();
+
+
+
+card.style.setProperty(
+"--x",
+e.clientX-rect.left+"px"
+);
+
+
+
+card.style.setProperty(
+"--y",
+e.clientY-rect.top+"px"
+);
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+
+/* ==========================================
+ Search System
+========================================== */
+
+
+function initSearch(){
+
+
+const search=document.querySelector(".search-box input");
+
+
+if(!search)return;
+
+
+
+search.addEventListener("input",()=>{
+
+
+let value=search.value.toLowerCase();
+
+
+
+document.querySelectorAll(
+".product-card,.category-card"
+)
+.forEach(card=>{
+
+
+let text=card.innerText.toLowerCase();
+
+
+
+card.style.display=
+text.includes(value)
+?
+""
+:
+"none";
+
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+ Logo 3D Animation
+========================================== */
+
+
+function initLogoAnimation(){
+
+
+const logo=document.querySelector(".logo img");
+
+
+if(!logo)return;
+
+
+
+logo.addEventListener("mousemove",e=>{
+
+
+let x=(window.innerWidth/2-e.clientX)/30;
+
+let y=(window.innerHeight/2-e.clientY)/30;
+
+
+
+logo.style.transform=
+`rotateY(${x}deg) rotateX(${y}deg) scale(1.05)`;
+
+
+});
+
+
+
+logo.addEventListener("mouseleave",()=>{
+
+
+logo.style.transform=
+"rotateY(0deg) rotateX(0deg) scale(1)";
+
+
+});
+
+
+}
+
+
+
+console.log("✅ Zayn Store Premium Script Loaded");
