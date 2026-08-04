@@ -624,3 +624,310 @@ logo.style.transform=
 
 
 console.log("✅ Zayn Store Premium Script Loaded");
+
+
+/* ==========================================
+   ZAYN STORE
+   Product Page JavaScript
+========================================== */
+
+
+/* ==========================================
+   Product Search
+========================================== */
+
+
+function initProductSearch(){
+
+const searchBtn = document.querySelector(".search-btn");
+
+const products = document.querySelectorAll(
+".store-product-card"
+);
+
+
+if(!searchBtn || !products.length) return;
+
+
+
+searchBtn.addEventListener("click",()=>{
+
+
+let keyword = prompt(
+"Search Product"
+);
+
+
+if(!keyword) return;
+
+
+
+keyword = keyword.toLowerCase();
+
+
+
+products.forEach(product=>{
+
+
+let text = product.innerText.toLowerCase();
+
+
+
+if(text.includes(keyword)){
+
+product.style.display="block";
+
+}
+
+else{
+
+product.style.display="none";
+
+}
+
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+/* ==========================================
+   Buy Button Animation
+========================================== */
+
+
+function initBuyButtons(){
+
+
+document.querySelectorAll(".buy-btn")
+.forEach(button=>{
+
+
+button.addEventListener("click",()=>{
+
+
+showToast(
+"Product Added To Cart 🛒"
+);
+
+
+
+button.innerHTML =
+`
+<i class="fa-solid fa-check"></i>
+ Added
+`;
+
+
+
+setTimeout(()=>{
+
+
+button.innerHTML="Buy Now";
+
+
+},2000);
+
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Category Hover Soundless Effect
+========================================== */
+
+
+function initProductHover(){
+
+
+document.querySelectorAll(
+".store-product-card,.mini-category"
+)
+.forEach(card=>{
+
+
+card.addEventListener(
+"mousemove",
+(e)=>{
+
+
+const rect =
+card.getBoundingClientRect();
+
+
+
+const x =
+e.clientX - rect.left;
+
+
+
+const y =
+e.clientY - rect.top;
+
+
+
+const centerX =
+rect.width/2;
+
+
+
+const centerY =
+rect.height/2;
+
+
+
+const rotateX =
+(y-centerY)/20;
+
+
+
+const rotateY =
+(centerX-x)/20;
+
+
+
+card.style.transform =
+`
+perspective(800px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+translateY(-10px)
+`;
+
+
+
+});
+
+
+
+
+card.addEventListener(
+"mouseleave",
+()=>{
+
+
+card.style.transform="";
+
+
+
+});
+
+
+
+});
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Newsletter
+========================================== */
+
+
+function initNewsletter(){
+
+
+const button =
+document.querySelector(
+".newsletter-form button"
+);
+
+
+
+const input =
+document.querySelector(
+".newsletter-form input"
+);
+
+
+
+if(!button || !input)
+return;
+
+
+
+button.addEventListener(
+"click",
+()=>{
+
+
+if(input.value.trim()===""){
+
+
+showToast(
+"Please enter email"
+);
+
+
+return;
+
+}
+
+
+
+showToast(
+"Subscribed Successfully 🎉"
+);
+
+
+
+input.value="";
+
+
+
+});
+
+
+}
+
+
+
+
+
+/* ==========================================
+   Product Page Loader
+========================================== */
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+initProductSearch();
+
+initBuyButtons();
+
+initProductHover();
+
+initNewsletter();
+
+
+});
+
+
+
+console.log(
+"✅ Zayn Store Product System Loaded"
+);
