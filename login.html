@@ -8,13 +8,14 @@
 
 <title>Zayn Store | Login</title>
 
+<meta name="description" content="Login to Zayn Store Premium Digital Marketplace">
+
 <link rel="stylesheet" href="style.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 </head>
 
@@ -26,128 +27,31 @@ rel="stylesheet">
 <div class="bg-blur blur-2"></div>
 
 
-
-<!-- Login Section -->
-
-
-<section class="login-section">
+<section class="auth-section">
 
 
-<div class="login-card">
+<div class="auth-card">
 
 
+<a href="index.html" class="auth-logo">
 
-<div class="login-logo">
+<img src="assets/file_000000000670823095edc6b750b38c45.png">
 
+<span>Zayn Store</span>
 
-<img src="assets/file_000000000670823095edc6b750b38c45.png"
-alt="Zayn Store Logo">
-
-
-</div>
+</a>
 
 
 
-
-<h1>
-
-Welcome Back
-
-</h1>
-
+<h1>Welcome Back</h1>
 
 <p>
-
-Login to access your Zayn Store account
-
+Login to access your digital products
 </p>
 
 
 
-
-<form>
-
-
-
-<div class="input-box">
-
-<i class="fa-solid fa-envelope"></i>
-
-<input 
-type="email"
-placeholder="Email Address"
-required>
-
-</div>
-
-
-
-
-<div class="input-box">
-
-<i class="fa-solid fa-lock"></i>
-
-<input 
-type="password"
-placeholder="Password"
-required>
-
-</div>
-
-
-
-
-<div class="login-options">
-
-
-<label>
-
-<input type="checkbox">
-
-Remember me
-
-</label>
-
-
-<a href="#">
-Forgot Password?
-</a>
-
-
-</div>
-
-
-
-
-<button class="login-submit">
-
-Login
-
-<i class="fa-solid fa-arrow-right"></i>
-
-</button>
-
-
-
-</form>
-
-
-
-
-
-<div class="divider">
-
-<span>
-OR
-</span>
-
-</div>
-
-
-
-
-
-<button class="google-login">
+<button id="googleLogin" class="google-btn">
 
 <i class="fa-brands fa-google"></i>
 
@@ -157,9 +61,57 @@ Continue with Google
 
 
 
+<div class="divider">
+
+<span>OR</span>
+
+</div>
 
 
-<p class="signup-text">
+
+<form id="loginForm">
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input 
+type="email"
+id="email"
+placeholder="Email Address"
+required>
+
+</div>
+
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input 
+type="password"
+id="password"
+placeholder="Password"
+required>
+
+</div>
+
+
+
+<button type="submit" class="primary-btn login-submit">
+
+Login
+
+</button>
+
+
+</form>
+
+
+
+<div class="auth-bottom">
 
 Don't have an account?
 
@@ -167,9 +119,7 @@ Don't have an account?
 Create Account
 </a>
 
-
-</p>
-
+</div>
 
 
 </div>
@@ -181,7 +131,169 @@ Create Account
 
 
 
-<script src="script.js"></script>
+<script type="module">
+
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+
+
+import {
+
+getAuth,
+
+GoogleAuthProvider,
+
+signInWithPopup,
+
+signInWithEmailAndPassword
+
+}
+
+from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+
+
+
+
+const firebaseConfig = {
+
+
+apiKey: "AIzaSyBla8U3ABFNdryefZp8pTwoVGJmZncNQPs",
+
+authDomain: "zaynytstore.firebaseapp.com",
+
+projectId: "zaynytstore",
+
+storageBucket: "zaynytstore.firebasestorage.app",
+
+messagingSenderId: "224758287869",
+
+appId: "1:224758287869:web:092f27ee0496df0b289d94",
+
+measurementId: "G-7YY7512C4F"
+
+
+};
+
+
+
+
+
+const app = initializeApp(firebaseConfig);
+
+
+const auth = getAuth(app);
+
+
+const provider = new GoogleAuthProvider();
+
+
+
+
+
+// Google Login
+
+
+document
+.getElementById("googleLogin")
+.addEventListener("click",()=>{
+
+
+signInWithPopup(auth,provider)
+
+.then((result)=>{
+
+
+const user=result.user;
+
+
+console.log(user);
+
+
+alert(
+"Welcome "+user.displayName
+);
+
+
+window.location.href="index.html";
+
+
+})
+
+
+.catch((error)=>{
+
+
+alert(error.message);
+
+
+});
+
+
+});
+
+
+
+
+
+// Email Password Login
+
+
+document
+.getElementById("loginForm")
+.addEventListener("submit",(e)=>{
+
+
+e.preventDefault();
+
+
+
+const email=document.getElementById("email").value;
+
+
+const password=document.getElementById("password").value;
+
+
+
+
+signInWithEmailAndPassword(
+auth,
+email,
+password
+)
+
+
+.then((result)=>{
+
+
+alert("Login Successful");
+
+
+window.location.href="index.html";
+
+
+})
+
+
+.catch((error)=>{
+
+
+alert(error.message);
+
+
+});
+
+
+
+});
+
+
+
+</script>
+
 
 
 </body>
