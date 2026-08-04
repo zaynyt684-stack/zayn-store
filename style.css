@@ -1976,3 +1976,7 @@ font-size:13px;
 }
 
    }
+
+#loader{
+    display:none !important;
+}
